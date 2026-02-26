@@ -5,6 +5,10 @@ import { ArrowRight, Sparkles, Brain, MessageSquare, Zap, Briefcase, Rocket } fr
 import Link from 'next/link'
 
 export default function CoursePage() {
+  const handleScrollToCurriculum = () => {
+    document.getElementById('curriculum')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground overflow-hidden">
       {/* Background Grid Effect */}
@@ -56,12 +60,13 @@ export default function CoursePage() {
             <span className="text-primary font-semibold">12 小時完整養成，學會一套真正可帶走的工作流程</span>
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground">
+          <div className="flex justify-center mb-12">
+            <Button
+              size="lg"
+              onClick={handleScrollToCurriculum}
+              className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground"
+            >
               立即查看課程內容 <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-            <Button size="lg" variant="outline" className="border-primary/50 hover:bg-primary/10">
-              課程完整架構
             </Button>
           </div>
         </div>
@@ -73,16 +78,16 @@ export default function CoursePage() {
           <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-balance">
             學會與 AI 協作
             <br />
-            <span className="bg-gradient-to-r from-primary to-muted bg-clip-text text-transparent">而不是學會按按鈕</span>
+            <span className="bg-gradient-to-r from-primary to-muted bg-clip-text text-transparent">而不是只會按按鈕</span>
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="space-y-4 p-6 rounded-lg border border-border/40 bg-card/50 hover:bg-card/80 transition-colors">
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-primary mt-2" />
                 <div>
-                  <h3 className="font-semibold text-lg mb-2">這不是工具課</h3>
-                  <p className="text-foreground/70">不教寫程式、不教技術指令，我們教的是一種新的工作方式</p>
+                  <h3 className="font-semibold text-lg mb-2">不只是工具課</h3>
+                  <p className="text-foreground/70">不教你背指令，而是教你把需求轉成可執行的工作步驟。</p>
                 </div>
               </div>
             </div>
@@ -91,8 +96,18 @@ export default function CoursePage() {
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-accent mt-2" />
                 <div>
-                  <h3 className="font-semibold text-lg mb-2">是工作流程升級</h3>
-                  <p className="text-foreground/70">一套可複製、可應用的 Vibe Coding 工作方法</p>
+                  <h3 className="font-semibold text-lg mb-2">工作流程升級</h3>
+                  <p className="text-foreground/70">建立可複製、可落地的 Vibe Coding 方法，讓成果更穩定產出。</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-4 p-6 rounded-lg border border-border/40 bg-card/50 hover:bg-card/80 transition-colors">
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-primary/70 mt-2" />
+                <div>
+                  <h3 className="font-semibold text-lg mb-2">馬上操作</h3>
+                  <p className="text-foreground/70">課程一半的時間詳細說明，一半的時間實際操作，邊學邊做更快上手。</p>
                 </div>
               </div>
             </div>
@@ -122,7 +137,6 @@ export default function CoursePage() {
               <br />
               <span className="text-foreground">12 小時完整養成</span>
             </h2>
-            <p className="text-foreground/70 max-w-2xl mx-auto">卡片式排列，科技風玻璃卡片設計</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -254,18 +268,9 @@ export default function CoursePage() {
                 準備好升級你的工作方法了嗎？
               </h2>
 
-              <p className="text-lg text-foreground/80 mb-8">
+              <p className="text-lg text-foreground/80">
                 用 12 小時，學會一套 AI 協作能力
               </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground">
-                  立即報名
-                </Button>
-                <Button size="lg" variant="outline" className="border-primary/50 hover:bg-primary/10">
-                  下載課程大綱
-                </Button>
-              </div>
             </div>
           </div>
         </div>
@@ -273,7 +278,7 @@ export default function CoursePage() {
 
       {/* Footer */}
       <footer className="border-t border-border/40 bg-card/30 py-8 px-4 sm:px-6 lg:px-8 text-center text-foreground/60 text-sm">
-        <p>© 2024 V0 × Vibe Coding. 保留所有權利。</p>
+        <p>© 2026 V0 × Vibe Coding. 保留所有權利。</p>
       </footer>
     </div>
   )
