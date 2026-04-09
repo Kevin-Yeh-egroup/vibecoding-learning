@@ -57,7 +57,7 @@ export default function CoursePage() {
           <p className="text-lg sm:text-xl text-foreground/80 mb-8 max-w-2xl mx-auto text-balance leading-relaxed">
             從想法到畫面，用自然語言生成 UI
             <br />
-            <span className="text-primary font-semibold">12 小時完整養成，學會一套真正可帶走的工作流程</span>
+            <span className="text-primary font-semibold">4 次課程、每次 2 小時，共 8 小時完整養成，學會一套真正可帶走的工作流程</span>
           </p>
 
           <div className="flex justify-center mb-12">
@@ -135,7 +135,7 @@ export default function CoursePage() {
             <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-balance">
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">📆 課程架構</span>
               <br />
-              <span className="text-foreground">12 小時完整養成</span>
+              <span className="text-foreground">8 小時完整養成 · 4 次課程 · 每次 2 小時</span>
             </h2>
           </div>
 
@@ -150,38 +150,38 @@ export default function CoursePage() {
               },
               {
                 week: 'Week 2',
-                title: '描述力訓練：讓 AI 聽懂你',
+                title: '描述與對話：讓 AI 聽懂並精準改版',
                 icon: MessageSquare,
-                topics: ['模糊 vs 結構化描述', 'UI 組成拆解', '需求改寫練習', '文字到頁面結構實作'],
-                outcome: '能寫出清楚可執行的 UI 描述'
+                topics: [
+                  '模糊 vs 結構化描述',
+                  'UI 組成拆解與需求改寫',
+                  '文字到頁面結構實作',
+                  '第一次生成為什麼不完美',
+                  '補充式優化與限制條件',
+                  '優化自己的頁面'
+                ],
+                outcome: '能寫出清楚可執行的描述，並在少回合內穩定改版'
               },
               {
                 week: 'Week 3',
-                title: '對話優化：用最少回合調整畫面',
-                icon: Zap,
-                topics: ['第一次生成為什麼不完美', '補充式優化策略', '限制條件的運用', '優化自己的頁面'],
-                outcome: '3 次對話內穩定改版'
-              },
-              {
-                week: 'Week 4',
                 title: '穩定輸出：建立風格與一致性',
                 icon: Sparkles,
                 topics: ['風格漂移的原因', '建立風格規則', '品牌一致性思考', '穩定生成實作'],
                 outcome: '產出風格一致的頁面'
               },
               {
-                week: 'Week 5',
-                title: '工作實戰：把生成變成職場武器',
+                week: 'Week 4',
+                title: '實戰與邊界：職場應用與成熟使用 AI',
                 icon: Briefcase,
-                topics: ['提案原型生成', 'MVP 展示頁設計', '與設計師/工程師溝通', '小組實戰'],
-                outcome: '完成一份可展示的工作成果'
-              },
-              {
-                week: 'Week 6',
-                title: '升級與邊界：成熟使用 AI',
-                icon: Rocket,
-                topics: ['V0 限制與使用策略', '免費與升級判斷', '什麼時候該找工程師', 'AI 協作未來趨勢'],
-                outcome: '知道工具邊界與成長方向'
+                topics: [
+                  '提案原型與 MVP 展示頁',
+                  '與設計師／工程師溝通',
+                  '小組實戰',
+                  'V0 限制與使用策略',
+                  '免費與升級判斷、何時該找工程師',
+                  'AI 協作未來趨勢'
+                ],
+                outcome: '完成可展示的工作成果，並掌握工具邊界與成長方向'
               }
             ].map((week, i) => {
               const Icon = week.icon
@@ -269,7 +269,7 @@ export default function CoursePage() {
               </h2>
 
               <p className="text-lg text-foreground/80">
-                用 12 小時，學會一套 AI 協作能力
+                用 8 小時（4 次 × 每次 2 小時），學會一套 AI 協作能力
               </p>
             </div>
           </div>
