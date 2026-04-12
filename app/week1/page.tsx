@@ -241,10 +241,18 @@ function Week1Content() {
           >
             ← 返回課程首頁
           </Link>
-          <span className="hidden text-xs text-muted-foreground sm:inline">
-            課堂引導頁
-            {instructorMode ? ' · 講師模式' : ''}
-          </span>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <Link
+              href="/week1/slides"
+              className="text-xs font-medium text-primary/90 underline-offset-4 hover:text-primary hover:underline sm:text-sm"
+            >
+              網頁教材（10 頁）
+            </Link>
+            <span className="hidden text-xs text-muted-foreground sm:inline">
+              課堂引導頁
+              {instructorMode ? ' · 講師模式' : ''}
+            </span>
+          </div>
         </div>
       </header>
 
