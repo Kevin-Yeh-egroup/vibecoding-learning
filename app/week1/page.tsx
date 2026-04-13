@@ -477,7 +477,7 @@ function Week1Content() {
               <CardContent className="space-y-6 px-6 text-center sm:px-8">
                 <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">準備進入下一步</h2>
                 <p className="mx-auto max-w-md text-sm leading-relaxed text-muted-foreground">
-                  Week 2 會更著重在怎麼描述、怎麼對話，讓 AI 更精準地幫你改版。
+                  Week 2 會整合「精準描述與改版」與「風格一致」：讓 AI 聽懂、改得準，畫面也穩得住。
                 </p>
                 <Button
                   size="lg"
@@ -485,7 +485,7 @@ function Week1Content() {
                   disabled
                   title="尚未開放"
                 >
-                  Week 2｜讓 AI 聽懂你
+                  Week 2｜描述、對話與風格
                   <ArrowRight className="size-4" />
                 </Button>
               </CardContent>
