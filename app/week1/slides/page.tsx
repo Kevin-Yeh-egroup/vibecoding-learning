@@ -44,20 +44,13 @@ type SlideDef = {
   instructorNote?: string
 }
 
-/** 將指定 slide 垂直置中於可捲動容器（不依賴 offsetParent，手機／巢狀定位也穩） */
-function scrollSlideToCenter(
+/** 將指定 slide 捲動到容器頂端（root 需有 position:relative，使 offsetTop 正確對齊） */
+function scrollSlideToTop(
   root: HTMLElement,
   slide: HTMLElement,
   behavior: ScrollBehavior = 'smooth',
 ) {
-  const rootRect = root.getBoundingClientRect()
-  const slideRect = slide.getBoundingClientRect()
-  const slideCenter = slideRect.top + slideRect.height / 2
-  const rootCenter = rootRect.top + root.clientHeight / 2
-  const delta = slideCenter - rootCenter
-  const max = Math.max(0, root.scrollHeight - root.clientHeight)
-  const top = Math.min(Math.max(0, root.scrollTop + delta), max)
-  root.scrollTo({ top, behavior })
+  root.scrollTo({ top: slide.offsetTop, behavior })
 }
 
 const SLIDES: SlideDef[] = [
@@ -299,7 +292,7 @@ function SlideShell({
     <section
       data-slide-index={index}
       className={cn(
-        'relative flex min-h-full snap-center snap-always flex-col justify-center px-5 py-14 sm:px-10 sm:py-16 lg:px-16',
+        'relative flex min-h-full flex-col justify-center px-5 py-14 sm:px-10 sm:py-16 lg:px-16',
         'border-b border-white/5',
       )}
     >
@@ -339,6 +332,16 @@ function Week1SlidesInner() {
   activeRef.current = active
   /** 按鈕／鍵盤觸發的平滑捲動期間，避免捲動監聽把目前頁改回上一頁 */
   const programmaticScrollLockRef = useRef<number | null>(null)
+  /** 換頁冷卻鎖，防止滾輪／滑動連續跳頁 */
+  const isScrollLocked = useRef(false)
+  /** 滾輪累積量 */
+  const wheelAccum = useRef(0)
+  /** 觸控起始 Y */
+  const touchStartY = useRef(0)
+  /** 滑鼠拖曳起始 Y */
+  const mouseDragStartY = useRef(0)
+  /** 是否正在拖曳中 */
+  const isDragging = useRef(false)
 
   useEffect(() => {
     const m = searchParams.get('mode') === 'teach' ? 'teach' : 'present'
@@ -387,7 +390,7 @@ function Week1SlidesInner() {
       })
     }
 
-    scrollSlideToCenter(root, el, behavior)
+    scrollSlideToTop(root, el, behavior)
   }, [])
 
   /** 依捲動位置更新目前頁（置中對齊時，以視窗中心最接近的 slide 為準） */
@@ -486,6 +489,132 @@ function Week1SlidesInner() {
     return () => window.removeEventListener('keydown', onKey)
   }, [active, goTo])
 
+  /** 滾輪：累積達閾值才換頁，換頁後鎖定冷卻時間 */
+  useEffect(() => {
+    const root = scrollerRef.current
+    if (!root) return
+
+    const THRESHOLD = 80
+    const LOCK_MS = 900
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault()
+      if (isScrollLocked.current) return
+
+      wheelAccum.current += e.deltaY
+
+      if (Math.abs(wheelAccum.current) >= THRESHOLD) {
+        const dir = wheelAccum.current > 0 ? 1 : -1
+        wheelAccum.current = 0
+        isScrollLocked.current = true
+        goTo(activeRef.current + dir)
+        setTimeout(() => {
+          isScrollLocked.current = false
+        }, LOCK_MS)
+      }
+    }
+
+    root.addEventListener('wheel', handleWheel, { passive: false })
+    return () => root.removeEventListener('wheel', handleWheel)
+  }, [goTo])
+
+  /** 觸控滑動：離手時判斷方向，超過閾值才換頁 */
+  useEffect(() => {
+    const root = scrollerRef.current
+    if (!root) return
+
+    const SWIPE_THRESHOLD = 60
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY.current = e.touches[0].clientY
+    }
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (isScrollLocked.current) return
+      const delta = touchStartY.current - e.changedTouches[0].clientY
+      if (Math.abs(delta) >= SWIPE_THRESHOLD) {
+        const dir = delta > 0 ? 1 : -1
+        isScrollLocked.current = true
+        goTo(activeRef.current + dir)
+        setTimeout(() => {
+          isScrollLocked.current = false
+        }, 900)
+      }
+    }
+
+    const handleTouchMove = (e: TouchEvent) => e.preventDefault()
+
+    root.addEventListener('touchstart', handleTouchStart, { passive: true })
+    root.addEventListener('touchmove', handleTouchMove, { passive: false })
+    root.addEventListener('touchend', handleTouchEnd, { passive: true })
+    return () => {
+      root.removeEventListener('touchstart', handleTouchStart)
+      root.removeEventListener('touchmove', handleTouchMove)
+      root.removeEventListener('touchend', handleTouchEnd)
+    }
+  }, [goTo])
+
+  /** 滑鼠左鍵拖曳：按住並上下移動來換頁 */
+  useEffect(() => {
+    const root = scrollerRef.current
+    if (!root) return
+
+    const DRAG_THRESHOLD = 60
+
+    const setCursor = (value: string) => {
+      document.body.style.cursor = value
+      document.body.style.userSelect = value ? 'none' : ''
+    }
+
+    const handleMouseDown = (e: MouseEvent) => {
+      if (e.button !== 0) return
+      isDragging.current = true
+      mouseDragStartY.current = e.clientY
+      setCursor('grabbing')
+    }
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging.current) return
+      e.preventDefault()
+    }
+
+    const finishDrag = (endY: number) => {
+      if (!isDragging.current) return
+      isDragging.current = false
+      setCursor('')
+
+      if (isScrollLocked.current) return
+      const delta = mouseDragStartY.current - endY
+      if (Math.abs(delta) >= DRAG_THRESHOLD) {
+        const dir = delta > 0 ? 1 : -1
+        isScrollLocked.current = true
+        goTo(activeRef.current + dir)
+        setTimeout(() => {
+          isScrollLocked.current = false
+        }, 900)
+      }
+    }
+
+    const handleMouseUp = (e: MouseEvent) => finishDrag(e.clientY)
+    const handleMouseLeave = () => {
+      if (!isDragging.current) return
+      isDragging.current = false
+      setCursor('')
+    }
+
+    root.addEventListener('mousedown', handleMouseDown)
+    root.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseup', handleMouseUp)
+    root.addEventListener('mouseleave', handleMouseLeave)
+    return () => {
+      root.removeEventListener('mousedown', handleMouseDown)
+      root.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+      root.removeEventListener('mouseleave', handleMouseLeave)
+      setCursor('')
+    }
+  }, [goTo])
+
   const modeLabel = useMemo(
     () => ({ present: '精簡', teach: '完整' } as const),
     [],
@@ -576,8 +705,8 @@ function Week1SlidesInner() {
 
       <div
         ref={scrollerRef}
-        className="min-h-0 flex-1 snap-y snap-mandatory overflow-y-auto overscroll-y-contain scroll-smooth [-webkit-overflow-scrolling:touch] touch-pan-y"
-        style={{ scrollSnapType: 'y mandatory' }}
+        className="relative min-h-0 flex-1 overflow-y-scroll cursor-grab [&::-webkit-scrollbar]:hidden"
+        style={{ scrollbarWidth: 'none' }}
       >
         {SLIDES.map((slide, i) => (
           <SlideShell key={i} index={i} total={SLIDES.length} mode={mode}>

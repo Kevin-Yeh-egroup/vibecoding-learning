@@ -29,6 +29,9 @@ export default function CoursePage() {
               <Link href="/week1">Week 1 課堂</Link>
             </Button>
             <Button variant="ghost" asChild>
+              <Link href="/week2">Week 2 課堂</Link>
+            </Button>
+            <Button variant="ghost" asChild>
               <Link href="#curriculum">課程架構</Link>
             </Button>
             <Button variant="ghost" asChild>
@@ -60,7 +63,7 @@ export default function CoursePage() {
           <p className="text-lg sm:text-xl text-foreground/80 mb-8 max-w-2xl mx-auto text-balance leading-relaxed">
             從想法到畫面，用自然語言生成 UI
             <br />
-            <span className="text-primary font-semibold">3 次課程、每次 2 小時，共 6 小時完整養成，學會一套真正可帶走的工作流程</span>
+            <span className="text-primary font-semibold">2 次課程、每次 2 小時，共 4 小時完整養成，學會一套真正可帶走的工作流程</span>
           </p>
 
           <div className="flex justify-center mb-12">
@@ -138,14 +141,15 @@ export default function CoursePage() {
             <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-balance">
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">📆 課程架構</span>
               <br />
-              <span className="text-foreground">6 小時完整養成 · 3 次課程 · 每次 2 小時</span>
+              <span className="text-foreground">4 小時完整養成 · 2 次課程 · 每次 2 小時</span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {[
               {
                 week: 'Week 1',
+                href: '/week1',
                 title: '思維轉換：從想法到畫面',
                 icon: Brain,
                 topics: [
@@ -158,68 +162,64 @@ export default function CoursePage() {
               },
               {
                 week: 'Week 2',
-                title: '描述、對話與風格一致',
-                icon: MessageSquare,
+                href: '/week2',
+                title: '描述對話、職場實戰與成熟使用 AI',
+                icon: Briefcase,
                 topics: [
                   '模糊 vs 結構化描述，UI 組成拆解與需求改寫',
                   '文字到頁面結構實作；第一次生成為什麼不完美',
                   '補充式優化、限制條件與少回合內穩定改版',
                   '風格漂移的原因、建立風格規則與品牌一致性',
-                  '穩定生成實作，優化自己的頁面',
+                  '提案原型與 MVP 展示頁、小組實戰',
+                  '與設計師／工程師溝通；V0 限制與使用策略',
+                  '免費與升級判斷、何時該找工程師、AI 協作未來趨勢',
                 ],
-                outcome:
-                  '能寫出清楚可執行的描述，在少回合內穩定改版，並產出風格一致的頁面',
-              },
-              {
-                week: 'Week 3',
-                title: '實戰與邊界：職場應用與成熟使用 AI',
-                icon: Briefcase,
-                topics: [
-                  '提案原型與 MVP 展示頁',
-                  '與設計師／工程師溝通',
-                  '小組實戰',
-                  'V0 限制與使用策略',
-                  '免費與升級判斷、何時該找工程師',
-                  'AI 協作未來趨勢',
-                ],
-                outcome: '完成可展示的工作成果，並掌握工具邊界與成長方向',
+                outcome: '能寫出清楚可執行的描述，在少回合內穩定改版，完成可展示的工作成果，並掌握工具邊界與成長方向',
               },
             ].map((week, i) => {
               const Icon = week.icon
               return (
-                <div
+                <Link
                   key={i}
-                  className="group relative p-6 sm:p-8 rounded-xl border border-primary/20 bg-gradient-to-br from-card/60 to-card/30 hover:from-card/80 hover:to-card/50 transition-all duration-300 hover:border-primary/40 glow-card"
+                  href={week.href}
+                  className="group block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
-                  <div className="absolute top-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <Icon className="w-24 h-24 text-primary" />
+                  <div className="relative h-full p-6 sm:p-8 rounded-xl border border-primary/20 bg-gradient-to-br from-card/60 to-card/30 hover:from-card/80 hover:to-card/50 transition-all duration-300 hover:border-primary/40 glow-card">
+                    <div className="absolute top-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity">
+                      <Icon className="w-24 h-24 text-primary" />
+                    </div>
+
+                    <div className="relative z-10">
+                      <div className="inline-flex flex-wrap items-center gap-2 mb-3">
+                        <span className="inline-block px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary text-sm font-semibold">
+                          {week.week}
+                        </span>
+                        <span className="text-xs font-medium text-primary/80 group-hover:underline">
+                          前往課堂引導 →
+                        </span>
+                      </div>
+
+                      <h3 className="text-xl sm:text-2xl font-bold mb-4 text-balance">{week.title}</h3>
+
+                      <div className="space-y-3 mb-6">
+                        <p className="text-sm font-semibold text-primary">重點能力：</p>
+                        <ul className="space-y-2">
+                          {week.topics.map((topic, j) => (
+                            <li key={j} className="flex gap-2 text-sm text-foreground/80">
+                              <span className="text-primary">•</span>
+                              <span>{topic}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="pt-4 border-t border-border/40">
+                        <p className="text-sm font-semibold text-muted mb-1">學習成果：</p>
+                        <p className="text-sm text-foreground/90">{week.outcome}</p>
+                      </div>
+                    </div>
                   </div>
-
-                  <div className="relative z-10">
-                    <div className="inline-block px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary text-sm font-semibold mb-3">
-                      {week.week}
-                    </div>
-
-                    <h3 className="text-xl sm:text-2xl font-bold mb-4 text-balance">{week.title}</h3>
-
-                    <div className="space-y-3 mb-6">
-                      <p className="text-sm font-semibold text-primary">重點能力：</p>
-                      <ul className="space-y-2">
-                        {week.topics.map((topic, j) => (
-                          <li key={j} className="flex gap-2 text-sm text-foreground/80">
-                            <span className="text-primary">•</span>
-                            <span>{topic}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="pt-4 border-t border-border/40">
-                      <p className="text-sm font-semibold text-muted mb-1">學習成果：</p>
-                      <p className="text-sm text-foreground/90">{week.outcome}</p>
-                    </div>
-                  </div>
-                </div>
+                </Link>
               )
             })}
           </div>
@@ -270,7 +270,7 @@ export default function CoursePage() {
               </h2>
 
               <p className="text-lg text-foreground/80">
-                用 6 小時（3 次 × 每次 2 小時），學會一套 AI 協作能力
+                用 4 小時（2 次 × 每次 2 小時），學會一套 AI 協作能力
               </p>
             </div>
           </div>

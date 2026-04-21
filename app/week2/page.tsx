@@ -10,6 +10,7 @@ import {
   BookOpen,
   CheckCircle2,
   ChevronRight,
+  ClipboardList,
   LayoutDashboard,
   Lightbulb,
   Sparkles,
@@ -19,11 +20,7 @@ import { cn } from '@/lib/utils'
 const SECTION_IDS = [
   'preface',
   'goals',
-  'step-1',
-  'step-2',
-  'step-3',
-  'step-4',
-  'step-5',
+  'highlights',
   'tips',
   'reflection',
   'cta',
@@ -31,131 +28,70 @@ const SECTION_IDS = [
 
 type SectionId = (typeof SECTION_IDS)[number]
 
-const STEPS = [
-  {
-    id: 'step-1' as const,
-    num: 1,
-    title: '想清楚：介紹頁要呈現什麼',
-    instruction:
-      '本週全班一起做個人介紹頁。請先列出幾件你希望別人認識你的事，寫關鍵字即可。',
-    bullets: [
-      '名字或稱呼（暱稱也可以）',
-      '你在做什麼、興趣或專長',
-      '一句話或一小段讓人記住你的介紹；若有作品或社群連結也可列在這裡（選填）',
-    ],
-    example: null as string | null,
-    highlight:
-      '真實內容、暱稱或假資料都可以。重點是練習把「關於我」拆成清楚的區塊，而不是一次寫滿長文。',
-    instructor:
-      '主題統一為個人介紹頁，可降低選題負擔。請學員用一至兩分鐘寫關鍵字，必要時邀請一人簡短分享。',
-  },
-  {
-    id: 'step-2' as const,
-    num: 2,
-    title: '用 ChatGPT 整理需求',
-    instruction:
-      '請 ChatGPT 把你的想法整理成「頁面上有哪些區塊」以及「每個區塊適合放什麼內容」。你可以這樣開頭：',
-    bullets: [] as string[],
-    example:
-      '幫我規劃一個單頁的個人介紹網頁，要有抬頭與簡短自我介紹、我在做什麼或興趣、聯絡或社群方式。請用條列寫出每個區塊的標題與建議放的內容，文字要口語、好讀。',
-    highlight:
-      '這一步的目標是拿到結構清楚的大綱。等等會把這段文字貼進 v0，當成生成畫面的依據。',
-    instructor:
-      '請強調分工：ChatGPT 協助結構與文案草稿，v0 負責畫面與版型。可示範如何請 AI 再縮短，或多加一個技能區。',
-  },
-  {
-    id: 'step-3' as const,
-    num: 3,
-    title: '把內容貼到 v0',
-    instruction:
-      '把 ChatGPT 整理好的大綱與文案貼到 v0，請它生成你的個人介紹頁畫面。',
-    bullets: [] as string[],
-    example: null,
-    highlight: '第一次只要看得出「這是在介紹你」的一整頁，就算達標。',
-    instructor:
-      '示範貼上與重新生成一次。可提醒學員加一句簡單的風格描述，例如單欄、手機也好讀。',
-  },
-  {
-    id: 'step-4' as const,
-    num: 4,
-    title: '觀察畫面',
-    instruction: '不必追求完美，先確認三件事：',
-    bullets: ['有區塊', '有結構', '有內容'],
-    example: null,
-    highlight: '對照剛才的大綱，看看關於你的資訊是否都出現在畫面上。',
-    instructor:
-      '帶大家用「區塊」來描述畫面，例如頭像區、自介、技能列表，幫助建立共同詞彙。',
-  },
-  {
-    id: 'step-5' as const,
-    num: 5,
-    title: '做小調整',
-    instruction: '試著只改一件事，例如：',
-    bullets: ['調整配色或整體風格', '調整區塊順序', '修改自介標題或其中一段文字'],
-    example: null,
-    highlight: '練習用一句話說清楚：要改哪一塊、希望變成什麼感覺。',
-    instructor:
-      '請學員口述一個與自己介紹有關的小改動，由講師示範如何在 v0 裡用對話修正。',
-  },
+const GOALS = [
+  '能分辨模糊與結構化描述，並把需求改寫成 AI 較能穩定執行的內容',
+  '能用對話做補充式優化，在少回合內改版，並留意風格一致與限制條件',
+  '能連結職場情境（提案、MVP、與設計／工程溝通），並說出工具邊界與後續成長方向',
 ]
 
-const GOALS = [
-  '用 ChatGPT 整理「關於我」的內容結構，再用 v0 做出看得見的介紹頁',
-  '理解 ChatGPT 負責內容與結構，v0 負責畫面與版型',
-  '完成一頁屬於自己的個人介紹原型',
+const HIGHLIGHTS = [
+  '描述與提問：為什麼 AI「做不好」常與我們沒講清楚有關，以及有效提問的關鍵',
+  '穩定改版：用對話調整、避免整頁重做；常見 Prompt 錯誤與畫面變亂的原因',
+  '風格與應用：建立簡單規則讓畫面一致，並思考在職場／團隊中的角色',
+  '進階環境（選修）：Cursor、Node.js、Git 與本機預覽——細節見投影片「完整」模式',
 ]
 
 const TIPS = [
-  '介紹頁不必一次到位，先求別人看得懂你是誰',
-  'AI 可以反覆修改，隨時換一種說法再生成',
-  '描述越具體，例如區塊、語氣或閱讀裝置，畫面通常越穩定',
+  '延續上週作品練習改版，比從零開始更能對照「有沒有變更準」',
+  '每次只改一兩件事，並用區塊名稱指出位置，改版會快很多',
+  '需要複製指令或連結時，請切到投影片的「完整」檢視',
 ]
 
 const REFLECTION = [
-  '你完成了一頁屬於自己的介紹畫面',
-  '你知道如何先用對話整理內容，再交給工具產出畫面',
-  '你開始用區塊與版型介紹自己，而不僅是一段文字',
+  '你更能說出「模糊」與「具體可執行」描述的差別',
+  '你知道如何用對話做小步調整，而不是每次都重講一整份需求',
+  '你開始能把成果放回職場情境，並意識到工具與協作的邊界',
 ]
 
 const PREFACE_BLOCKS: { title: string; paragraphs: string[] }[] = [
   {
     title: '今天的任務與準備',
     paragraphs: [
-      '今天的主題是個人介紹頁。請依講師指示準備可連上網路的裝置，並在引導下開啟 ChatGPT 與 v0。本週練習不要求撰寫程式，請跟著畫面上的步驟操作即可。',
-      '若某一步與你的畫面不一致，先對照該步下方的重點說明，或舉手請講師協助，不必自行猜測。',
+      '本週延續 Week 1：在已有一頁畫面的基礎上，練習把話講清楚、把畫面改到更穩、更一致，並連結到實際工作場景。請依講師指示準備可連上網路的裝置；若講師帶到進階環境，請對照投影片中的 Cursor／Node.js／Git 說明。',
+      '若某一段與你的畫面不一致，先對照本頁與投影片的「本頁重點」，或舉手請講師協助，不必自行猜測。',
     ],
   },
   {
-    title: '本週教材裡的用語：Vibe Coding',
+    title: '與 Week 1 的銜接',
     paragraphs: [
-      'Vibe Coding（也寫成 vibecoding）在公開討論裡，多指用口語把需求說給 AI 聽，由工具產出畫面或程式，你再依「看得見的結果」回饋、修改，必要時多試幾次。本週我們只取課堂實作需要的部分：描述、生成、對照畫面、再調整。',
-      '課堂上不必記名詞出處；若講師提到 Andrej Karpathy，僅作為這個說法在業界被廣泛討論的背景。無需背誦人名，重點是你能否依步驟完成練習。',
+      '上週你體驗了「結構先、畫面後」：用對話整理內容，再交給 v0 產出介面。本週要把重心放在「描述品質」與「改版方法」：同樣的工具，描述越可執行、回饋越具體，產出就越穩。',
+      '你可以沿用個人介紹頁當練習素材，或在講師同意下換成與工作較接近的主題；重點是練習方法，而不是重做一張完全不同的圖。',
     ],
   },
   {
-    title: 'ChatGPT 和 v0，今天各做什麼',
+    title: '本週教材：課堂引導與投影片',
     paragraphs: [
-      'ChatGPT：協助你把「關於我」整理成區塊清楚的大綱與文字草稿。',
-      'v0：依你貼上的內容，產出網頁畫面與版型。稍後的 Step 2 到 Step 5 會依這個分工帶你做；請勿跳過 ChatGPT 直接空丟一句話給 v0，較容易版面散掉或內容不完整。',
+      '本頁是「課堂引導」：用語、目標、節奏與注意事項。步驟中的示範與長篇範例在「網頁投影片」裡，講師會依課堂進度帶你切換精簡／完整模式。',
+      '投影片中的 Cursor 安裝與本機專案啟動屬進階選修；課堂上聽懂方向即可，可課後再依截圖與連結完成。',
     ],
   },
   {
     title: '練習時請遵守',
     paragraphs: [
       '本頁與工具中請勿輸入可辨識案主或第三人的敏感個資；示範與練習請用暱稱、代稱或假資料。各機構若有資訊安全或對外發布規範，以你服務單位的規定為準。',
-      '工具能加快排版與草稿，無法替你承擔法遵或倫理責任；對外使用任何產出前，仍須由人確認內容是否合宜、正確。',
+      '工具能加快草稿與討論，無法替你承擔法遵或倫理責任；對外使用任何產出前，仍須由人確認內容是否合宜、正確。',
     ],
   },
   {
     title: '怎麼閱讀這份引導頁',
     paragraphs: [
-      '讀完本節後，請往下捲到「學習目標」，確認今天結束時要對得起哪幾件事。接著依 Step 1 到 Step 5 順序操作；每一步的「重點」是對照檢查用，不是額外作業。',
+      '讀完前言後，請看「學習目標」與「本週重點與進行方式」，對齊今天下課時要帶走的能力。實作與示範請依講師指示開啟「Week 2 投影片」，並善用完整模式中的範例與檢核表。',
     ],
   },
 ]
 
 const PREFACE_PULLQUOTE =
-  '今天操作上記住這個循環：先說清楚要什麼，生成一版，看畫面，再改。從介紹你自己開始練。'
+  '記住：本週練的是「怎麼講清楚」和「怎麼改得準」。畫面已經在那裡了，我們把它變得更可信、更好講、更好用。'
 
 function InstructorNote({
   show,
@@ -173,7 +109,7 @@ function InstructorNote({
   )
 }
 
-function Week1Content() {
+function Week2Content() {
   const searchParams = useSearchParams()
   const instructorMode = searchParams.get('instructor') === '1'
   const [active, setActive] = useState<SectionId>('preface')
@@ -182,7 +118,7 @@ function Week1Content() {
     () => [
       { id: 'preface' as const, label: '前言' },
       { id: 'goals' as const, label: '學習目標' },
-      ...STEPS.map((s) => ({ id: s.id, label: `Step ${s.num}` })),
+      { id: 'highlights' as const, label: '本週重點' },
       { id: 'tips' as const, label: '使用提示' },
       { id: 'reflection' as const, label: '今日回顧' },
       { id: 'cta' as const, label: '下一步' },
@@ -216,15 +152,12 @@ function Week1Content() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [])
 
-  const stepIndex = STEPS.findIndex((s) => s.id === active)
-  const progress =
-    active === 'preface' || active === 'goals'
-      ? 0
-      : stepIndex >= 0
-        ? ((stepIndex + 1) / STEPS.length) * 100
-        : active === 'tips' || active === 'reflection' || active === 'cta'
-          ? 100
-          : 0
+  const progress = useMemo(() => {
+    const order: SectionId[] = [...SECTION_IDS]
+    const idx = order.indexOf(active)
+    if (idx < 0) return 0
+    return (idx / (order.length - 1)) * 100
+  }, [active])
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -243,13 +176,23 @@ function Week1Content() {
           </Link>
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
             <Link
-              href="/week1/slides"
+              href="/week2/homework"
+              className="inline-flex items-center gap-1 text-xs font-medium text-accent/95 underline-offset-4 hover:text-accent hover:underline sm:text-sm"
+            >
+              <ClipboardList className="size-3.5 shrink-0 opacity-90" aria-hidden />
+              回家作業
+            </Link>
+            <span className="hidden text-border/80 sm:inline" aria-hidden>
+              |
+            </span>
+            <Link
+              href="/week2/slides"
               className="text-xs font-medium text-primary/90 underline-offset-4 hover:text-primary hover:underline sm:text-sm"
             >
-              網頁教材（10 頁）
+              網頁投影片（11 頁）
             </Link>
             <span className="hidden text-xs text-muted-foreground sm:inline">
-              課堂引導頁
+              Week 2 課堂引導
               {instructorMode ? ' · 講師模式' : ''}
             </span>
           </div>
@@ -293,7 +236,7 @@ function Week1Content() {
             </nav>
             {instructorMode && (
               <p className="text-xs leading-relaxed text-muted-foreground">
-                給學員的連結請勿加上講師參數，網址列結尾應為 week1，不要帶問號與 instructor 字樣。
+                給學員的連結請勿加上講師參數，網址列結尾應為 week2，不要帶問號與 instructor 字樣。
               </p>
             )}
           </div>
@@ -304,19 +247,19 @@ function Week1Content() {
             <header className="space-y-5">
               <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
                 <Sparkles className="size-3.5" aria-hidden />
-                Week 1 · 課堂用
+                Week 2 · 課堂用
               </div>
               <div className="space-y-3">
                 <h1 className="text-balance text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
                   <span className="bg-gradient-to-r from-primary via-muted to-accent bg-clip-text text-transparent">
-                    Week 1｜從想法到畫面
+                    Week 2｜讓 AI 聽懂你
                   </span>
                 </h1>
                 <p className="max-w-3xl text-lg leading-snug text-foreground/90 sm:text-xl sm:leading-snug">
-                  用 ChatGPT × v0 體驗 Vibe Coding
+                  從描述、對話到穩定產出，並連結職場應用
                 </p>
                 <p className="max-w-2xl text-base leading-relaxed text-primary/90">
-                  本週主題是每人製作一頁個人介紹。全程不需寫程式。
+                  本週在既有畫面上練習「講清楚、改得準、風格穩」；進階環境請依投影片選修完成。
                 </p>
               </div>
               <div className="flex max-w-2xl items-start gap-3 border-l-2 border-primary/40 pl-4">
@@ -326,7 +269,7 @@ function Week1Content() {
                     前言
                   </p>
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                    與今天實作有關的用語、分工與注意事項。請對照講師示範與下方步驟操作。
+                    與本週實作有關的用語、節奏與注意事項。請對照講師示範與投影片操作。
                   </p>
                 </div>
               </div>
@@ -354,7 +297,7 @@ function Week1Content() {
                   <p className="mt-2 text-sm leading-relaxed text-foreground/90">{PREFACE_PULLQUOTE}</p>
                 </aside>
                 <InstructorNote show={instructorMode}>
-                  前言已改為教材語氣；若時間緊可只唸「今天的任務與準備」與「兩個工具各做什麼」，其餘請學員自讀。資安段請口頭重申：示範帳號與假資料即可。
+                  前言可快速帶過「與 Week 1 銜接」與「教材雙軌」；Cursor／Node 段落若課堂不操作，請明講「課後依投影片」即可。
                 </InstructorNote>
               </CardContent>
             </Card>
@@ -383,54 +326,27 @@ function Week1Content() {
             </div>
           </section>
 
-          <section className="space-y-8">
+          <section id="highlights" className="scroll-mt-28 space-y-6">
             <div className="space-y-2">
-              <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">步驟引導</h2>
+              <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">本週重點與進行方式</h2>
               <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
-                依序完成即可。每步都有重點提示，講師會帶你對照畫面說明。
+                下列與課程架構中的 Week 2 主題對齊；細部講義、範例與檢核表請在投影片的「完整」模式中對照。
               </p>
             </div>
-            {STEPS.map((step) => (
-              <Card
-                key={step.id}
-                id={step.id}
-                className="scroll-mt-28 border-border/60 bg-white/[0.04] py-8 shadow-none backdrop-blur-md transition-all duration-300 hover:border-primary/30"
-              >
-                <CardHeader className="space-y-1 px-6 sm:px-8">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <span className="flex size-10 items-center justify-center rounded-full bg-gradient-to-br from-primary/25 to-accent/25 text-sm font-bold text-primary ring-1 ring-primary/30">
-                      {step.num}
-                    </span>
-                    <CardTitle className="text-lg sm:text-xl">{step.title}</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-5 px-6 sm:px-8">
-                  <p className="leading-relaxed text-foreground/90">{step.instruction}</p>
-                  {step.bullets.length > 0 && (
-                    <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground marker:text-primary/80">
-                      {step.bullets.map((b) => (
-                        <li key={b} className="pl-1">
-                          {b}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  {step.example && (
-                    <figure className="rounded-lg border border-primary/25 bg-primary/[0.06] py-3 pl-4 pr-4">
-                      <figcaption className="mb-2 text-xs font-medium text-primary/90">範例說法，可直接複製後再依你調整</figcaption>
-                      <blockquote className="border-l-2 border-primary/35 pl-3 text-sm leading-relaxed text-foreground/90">
-                        {step.example}
-                      </blockquote>
-                    </figure>
-                  )}
-                  <div className="rounded-lg border border-accent/20 bg-accent/5 px-4 py-3 text-sm leading-relaxed text-muted-foreground">
-                    <span className="font-medium text-accent">重點：</span>
-                    {step.highlight}
-                  </div>
-                  <InstructorNote show={instructorMode}>{step.instructor}</InstructorNote>
-                </CardContent>
-              </Card>
-            ))}
+            <Card className="border-border/60 bg-white/[0.04] shadow-none backdrop-blur-md">
+              <CardContent className="px-6 py-6 sm:px-8 sm:py-8">
+                <ul className="list-disc space-y-3 pl-5 text-sm leading-relaxed text-foreground/88 marker:text-primary/80">
+                  {HIGHLIGHTS.map((h) => (
+                    <li key={h} className="pl-1">
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+                <InstructorNote show={instructorMode}>
+                  可依時間刪減「職場應用」深度，但務必保留「描述／改版」兩條主線，並讓學員至少開啟一次投影片完整模式對照。
+                </InstructorNote>
+              </CardContent>
+            </Card>
           </section>
 
           <section id="tips" className="scroll-mt-28">
@@ -475,20 +391,31 @@ function Week1Content() {
           <section id="cta" className="scroll-mt-28 pb-8">
             <Card className="overflow-hidden border-primary/30 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 py-10 shadow-none backdrop-blur-md">
               <CardContent className="space-y-6 px-6 text-center sm:px-8">
-                <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">準備進入下一步</h2>
+                <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">進行本週教材</h2>
                 <p className="mx-auto max-w-md text-sm leading-relaxed text-muted-foreground">
-                  Week 2 會整合「精準描述與改版」與「風格一致」：讓 AI 聽懂、改得準，畫面也穩得住。
+                  開啟網頁投影片，依講師節奏切換精簡／完整模式；課後可自學 Cursor 與本機環境小節。
                 </p>
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
-                  asChild
-                >
-                  <Link href="/week2">
-                    Week 2｜描述、對話與風格
-                    <ArrowRight className="size-4" />
-                  </Link>
-                </Button>
+                <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+                  <Button
+                    size="lg"
+                    className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
+                    asChild
+                  >
+                    <Link href="/week2/slides">
+                      開啟 Week 2 投影片
+                      <ArrowRight className="size-4" />
+                    </Link>
+                  </Button>
+                  <Button size="lg" variant="outline" className="border-accent/40 text-foreground/90" asChild>
+                    <Link href="/week2/homework">
+                      <ClipboardList className="size-4" aria-hidden />
+                      回家作業說明
+                    </Link>
+                  </Button>
+                </div>
+                <p className="mx-auto max-w-md text-xs leading-relaxed text-muted-foreground">
+                  作業：請於 2026/4/30 前將優化後的專案資料夾壓縮檔交給 Kevin，詳見「回家作業」頁。
+                </p>
               </CardContent>
             </Card>
           </section>
@@ -498,7 +425,7 @@ function Week1Content() {
   )
 }
 
-export default function Week1Page() {
+export default function Week2Page() {
   return (
     <Suspense
       fallback={
@@ -507,7 +434,7 @@ export default function Week1Page() {
         </div>
       }
     >
-      <Week1Content />
+      <Week2Content />
     </Suspense>
   )
 }
