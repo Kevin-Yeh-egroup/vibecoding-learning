@@ -8,6 +8,7 @@ import {
   useMemo,
   useRef,
   useState,
+  type ReactNode,
 } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -31,7 +32,7 @@ type SlideDef = {
   subtitle?: string
   /** 給學員讀的主敘述（精簡／完整皆顯示；完整模式另附小節與範例） */
   narrative?: string[]
-  bullets?: string[]
+  bullets?: (string | ReactNode)[]
   highlights?: string[]
   /** 本頁重點（精簡與完整皆顯示，精簡時字可略大） */
   keyTakeaway?: string
@@ -149,10 +150,26 @@ const SLIDES: SlideDef[] = [
   },
   {
     title: '今天的流程',
-    bullets: ['1. 想法', '2. ChatGPT', '3. v0', '4. 畫面'],
+    bullets: [
+      '1. 想法',
+      '2. ChatGPT或是常用的AI',
+      <>
+        <span className="tabular-nums">3.</span>{' '}
+        <a
+          href="https://v0.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sky-200 underline decoration-sky-400/60 underline-offset-2 transition-colors hover:text-sky-100"
+        >
+          V0
+        </a>
+        <span className="ml-2 font-mono text-sm text-slate-400 sm:text-base">https://v0.app/</span>
+      </>,
+      '4. 畫面',
+    ],
     narrative: [
       '第一步先把主題選定（個人／活動／課程），寫下關鍵字即可，不用寫作文。',
-      '第二步請 ChatGPT 把關鍵字變成「區塊清單＋每區建議內容」，這一步的產出應該像一份小企畫，而不是一整篇散文。',
+      '第二步請 ChatGPT或是常用的AI 把關鍵字變成「區塊清單＋每區建議內容」，這一步的產出應該像一份小企畫，而不是一整篇散文。',
       '第三步把這份企畫貼到 v0，請它生成單頁 UI。你會先得到「能看」的版本，可能不完美，但足以讓你指出問題。',
       '第四步進入調整：你開始學會用對話修正，而不是每次重想一個全新需求。',
     ],
@@ -626,8 +643,8 @@ function Week1SlidesInner() {
                     mode === 'present' ? 'text-base sm:text-lg' : 'text-sm sm:text-base',
                   )}
                 >
-                  {slide.bullets.map((b) => (
-                    <li key={b} className="flex gap-3">
+                  {slide.bullets.map((b, bi) => (
+                    <li key={`bullet-${bi}`} className="flex gap-3">
                       <span
                         className="mt-2 size-2 shrink-0 rounded-full bg-gradient-to-br from-sky-400 to-violet-500 shadow-[0_0_12px_rgba(56,189,248,0.55)]"
                         aria-hidden
