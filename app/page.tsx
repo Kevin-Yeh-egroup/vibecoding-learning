@@ -25,7 +25,18 @@ const studentPortfolios = [
     students: [
       { name: '雨虹' },
       { name: '怡君' },
-      { name: '瑜君' },
+      {
+        name: '洪瑜君',
+        href: '/portfolio/hung-yu-jun',
+        preview: {
+          nickname: '工作效率工具組',
+          role: '每日工作記事／週計畫任務管理',
+          quote: '把日常紀錄、任務安排與進度回報整理成可複製的工作流程。',
+          sections: ['工作紀錄', '番茄鐘', '任務管理', '下週預覽'],
+          initial: '洪',
+          palette: 'teal',
+        },
+      },
       { name: '思宜' },
       { name: '雅婷' },
       {
