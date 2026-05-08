@@ -23,7 +23,6 @@ const studentPortfolios = [
   {
     group: '辦公室人員',
     students: [
-      { name: '雨虹' },
       { name: '怡君' },
       {
         name: '洪瑜君',
