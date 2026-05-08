@@ -170,6 +170,9 @@ const SLIDES: SlideDef[] = [
         heading: '安裝後的操作｜步驟 2：安裝依賴並啟動本機伺服器',
         lines: [
           '在 Cursor 開啟終端機：View → Terminal。',
+          '下方點開加號旁邊的小箭頭。',
+          '選 command prompt。',
+          '再輸入下方指令。',
           <span className="block font-mono text-slate-100/95">
             1. npm install --legacy-peer-deps
           </span>,
