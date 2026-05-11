@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState, type ComponentProps, type FormEvent } from 'react'
+import { useEffect, useMemo, useState, type ComponentProps, type CSSProperties, type FormEvent } from 'react'
 import {
   ArrowDown,
   ArrowRight,
@@ -744,6 +744,26 @@ const benefits = [
   { slug: 'early-intervention', icon: '🧑‍⚕️', title: '早療服務', description: '發展評估、療育與轉介資源', target: '疑似或確診發展遲緩之嬰幼兒與家庭', benefit: '依需求提供評估與療育資源諮詢／轉介' },
 ]
 
+const chenLightThemeVars = {
+  '--background': 'oklch(1 0 0)',
+  '--foreground': 'oklch(0.145 0 0)',
+  '--card': 'oklch(1 0 0)',
+  '--card-foreground': 'oklch(0.145 0 0)',
+  '--popover': 'oklch(1 0 0)',
+  '--popover-foreground': 'oklch(0.145 0 0)',
+  '--primary': 'oklch(0.62 0.19 350)',
+  '--primary-foreground': 'oklch(1 0 0)',
+  '--secondary': 'oklch(0.97 0.02 350)',
+  '--secondary-foreground': 'oklch(0.25 0.05 350)',
+  '--muted': 'oklch(0.96 0.01 350)',
+  '--muted-foreground': 'oklch(0.5 0.03 350)',
+  '--accent': 'oklch(0.88 0.07 55)',
+  '--accent-foreground': 'oklch(0.32 0.08 55)',
+  '--border': 'oklch(0.9 0.04 350)',
+  '--input': 'oklch(0.9 0.04 350)',
+  '--ring': 'oklch(0.7 0.15 350)',
+} as CSSProperties
+
 function ChenTzuMinOriginal() {
   const entryOptions = [
     { icon: '👶', label: '我有 0–2 歲寶寶', color: 'pink' as const },
@@ -754,9 +774,9 @@ function ChenTzuMinOriginal() {
     { icon: '🥣', label: '寶寶副食品及食譜', color: 'blue' as const },
   ]
   return (
-    <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-50 border-b border-pink-100 bg-white/80 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-lg items-center justify-between px-4 py-3">
+    <div className="min-h-screen overflow-x-hidden bg-gradient-to-b from-pink-50 via-white to-sky-50 text-foreground" style={chenLightThemeVars}>
+      <header className="sticky top-0 z-50 border-b border-pink-100 bg-white/85 backdrop-blur-sm">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
           <div className="flex items-center gap-2">
             <span className="text-2xl" role="img" aria-label="家庭">🏠</span>
             <span className="font-bold text-foreground">台中市福利小幫手</span>
@@ -768,60 +788,93 @@ function ChenTzuMinOriginal() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 pb-12">
-        <div className="relative flex gap-6">
-          <RegionSidebarOriginal />
-          <div className="flex flex-1 justify-center">
-            <div className="w-full max-w-lg">
-              <section className="pb-6 pt-8 text-center">
-                <div className="mb-4 flex justify-center gap-2">
-                  <span className="animate-bounce text-4xl">🎀</span>
-                  <span className="animate-bounce text-4xl [animation-delay:100ms]">🧸</span>
-                  <span className="animate-bounce text-4xl [animation-delay:200ms]">🎈</span>
-                </div>
-                <h1 className="mb-2 text-balance text-2xl font-bold text-foreground">給爸媽的一份福利小幫手</h1>
-                <p className="text-muted-foreground">不用找資料，這裡幫你整理好</p>
-              </section>
+      <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+        <section className="mb-10 overflow-hidden rounded-[2rem] border border-pink-100 bg-white/80 p-6 shadow-sm sm:p-10">
+          <div className="grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+            <div>
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-pink-100 px-4 py-2 text-sm font-semibold text-pink-700">
+                <span>🎀</span>
+                育兒福利資訊整理
+              </div>
+              <h1 className="text-balance text-4xl font-bold leading-tight text-foreground sm:text-5xl">
+                給爸媽的一份
+                <span className="text-pink-600">福利小幫手</span>
+              </h1>
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
+                把育兒家庭常見的補助、托育、醫療與發展資源整理成容易掃讀的入口，讓爸媽不用在複雜資訊裡來回搜尋。
+              </p>
+              <div className="mt-6 grid gap-3 sm:grid-cols-3">
+                {['情境式入口', '熱門補助卡片', '縣市資源查詢'].map((item) => (
+                  <div key={item} className="rounded-2xl border border-pink-100 bg-pink-50 px-4 py-3 text-sm font-semibold text-pink-700">
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
 
-              <section className="mb-8">
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                  {entryOptions.map((option) => (
-                    <EntryButtonOriginal key={option.label} {...option} layout="vertical" />
+            <div className="rounded-[1.75rem] border border-pink-100 bg-gradient-to-br from-pink-50 to-sky-50 p-6">
+              <div className="mb-5 flex justify-center gap-3 text-4xl">
+                <span className="animate-bounce">🎀</span>
+                <span className="animate-bounce [animation-delay:100ms]">🧸</span>
+                <span className="animate-bounce [animation-delay:200ms]">🎈</span>
+              </div>
+              <div className="rounded-3xl bg-white p-5 shadow-sm">
+                <p className="text-center text-sm font-semibold text-pink-700">快速找到適合你的資源</p>
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                  {entryOptions.slice(0, 4).map((option) => (
+                    <EntryButtonOriginal key={option.label} {...option} layout="vertical" compact />
                   ))}
                 </div>
-              </section>
-
-              <section>
-                <div className="mb-4 flex items-center gap-2">
-                  <span className="text-xl">⭐</span>
-                  <h2 className="text-lg font-bold text-foreground">熱門補助</h2>
-                </div>
-                <div className="-mx-4 overflow-x-auto px-4 pb-4">
-                  <div className="flex gap-4">
-                    {benefits.map((benefit) => (
-                      <BenefitCardOriginal key={benefit.slug} {...benefit} />
-                    ))}
-                  </div>
-                </div>
-                <p className="mt-2 text-center text-xs text-muted-foreground">← 左右滑動看更多 →</p>
-              </section>
-
-              <footer className="mt-10 border-t border-pink-100 pt-6 text-center">
-                <p className="text-xs leading-relaxed text-muted-foreground">
-                  資料來源：台中市政府社會局
-                  <br />
-                  如有疑問請撥打 1999 市民專線
-                </p>
-              </footer>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
+
+        <section className="mb-10 rounded-[2rem] border border-pink-100 bg-white/80 p-6 shadow-sm sm:p-8">
+          <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold text-pink-700">Quick Entry</p>
+              <h2 className="text-2xl font-bold text-foreground">依需求快速找到資源</h2>
+            </div>
+            <p className="text-sm text-muted-foreground">先選情境，再看可能適用的補助或服務。</p>
+          </div>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+            {entryOptions.map((option) => (
+              <EntryButtonOriginal key={option.label} {...option} layout="vertical" />
+            ))}
+          </div>
+        </section>
+
+        <section className="grid gap-8 lg:grid-cols-[280px_1fr]">
+          <RegionSidebarOriginal />
+
+          <div className="min-w-0 rounded-[2rem] border border-pink-100 bg-white/80 p-6 shadow-sm sm:p-8">
+            <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="text-sm font-semibold text-pink-700">Popular Benefits</p>
+                <h2 className="text-2xl font-bold text-foreground">熱門補助</h2>
+              </div>
+              <p className="text-sm text-muted-foreground">以卡片整理對象、內容與下一步。</p>
+            </div>
+            <div className="grid gap-4 xl:grid-cols-2">
+              {benefits.map((benefit) => (
+                <BenefitCardOriginal key={benefit.slug} {...benefit} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <footer className="mt-10 rounded-3xl border border-pink-100 bg-white/70 px-6 py-5 text-center">
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            資料來源：台中市政府社會局。實際申請資格、金額與時程仍以主管機關公告為準；如有疑問請撥打 1999 市民專線。
+          </p>
+        </footer>
       </main>
     </div>
   )
 }
 
-function EntryButtonOriginal({ icon, label, color, layout = 'horizontal' }: { icon: string; label: string; color: 'pink' | 'blue' | 'yellow' | 'purple'; layout?: 'horizontal' | 'vertical' }) {
+function EntryButtonOriginal({ icon, label, color, layout = 'horizontal', compact = false }: { icon: string; label: string; color: 'pink' | 'blue' | 'yellow' | 'purple'; layout?: 'horizontal' | 'vertical'; compact?: boolean }) {
   const colorMap = {
     pink: 'border-pink-200 bg-pink-100 text-pink-700 hover:bg-pink-200',
     blue: 'border-sky-200 bg-sky-100 text-sky-700 hover:bg-sky-200',
@@ -829,8 +882,8 @@ function EntryButtonOriginal({ icon, label, color, layout = 'horizontal' }: { ic
     purple: 'border-violet-200 bg-violet-100 text-violet-700 hover:bg-violet-200',
   }
   return (
-    <button className={cn('flex w-full rounded-2xl border-2 p-4 text-base font-medium transition-all duration-200 hover:scale-[1.02] hover:shadow-md active:scale-[0.98]', layout === 'vertical' ? 'min-h-[92px] flex-col items-center justify-center gap-2 text-center' : 'flex-row items-center gap-3 text-left', colorMap[color])}>
-      <span className={cn('text-2xl', layout === 'vertical' && 'text-3xl')} role="img" aria-hidden="true">{icon}</span>
+    <button className={cn('flex w-full rounded-2xl border-2 font-medium transition-all duration-200 hover:scale-[1.02] hover:shadow-md active:scale-[0.98]', compact ? 'p-3 text-sm' : 'p-4 text-base', layout === 'vertical' ? 'min-h-[92px] flex-col items-center justify-center gap-2 text-center' : 'flex-row items-center gap-3 text-left', colorMap[color])}>
+      <span className={cn('text-2xl', layout === 'vertical' && !compact && 'text-3xl')} role="img" aria-hidden="true">{icon}</span>
       <span className={cn('leading-snug', layout === 'vertical' && 'text-sm')}>{label}</span>
     </button>
   )
@@ -838,7 +891,7 @@ function EntryButtonOriginal({ icon, label, color, layout = 'horizontal' }: { ic
 
 function BenefitCardOriginal({ icon, title, description, target, benefit }: (typeof benefits)[number]) {
   return (
-    <Card className="min-w-[280px] max-w-[320px] flex-shrink-0 overflow-hidden rounded-2xl border-2 border-pink-100 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+    <Card className="h-full overflow-hidden rounded-2xl border-2 border-pink-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
       <CardContent className="flex flex-col gap-3 p-5">
         <div className="flex items-start gap-3">
           <span className="text-3xl" role="img" aria-hidden="true">{icon}</span>
@@ -886,27 +939,32 @@ function RegionSidebarOriginal() {
     return regions.filter((region) => region.label.includes(query))
   }, [q, regions])
   return (
-    <aside className="hidden w-[320px] shrink-0 lg:block">
-      <div className="sticky top-[60px] h-[calc(100vh-60px)] pr-4">
-        <div className="flex h-full flex-col rounded-2xl border-2 border-pink-100 bg-white p-4">
-          <div className="flex items-center justify-between gap-2">
-            <div className="font-bold text-foreground">縣市 / 區域</div>
-            <div className="text-xs text-muted-foreground">12 縣市</div>
-          </div>
-          <div className="mt-3">
-            <input value={q} onChange={(event) => setQ(event.target.value)} placeholder="搜尋：台北市-信義區" className="w-full rounded-xl border-2 border-pink-100 bg-white px-3 py-2 text-sm outline-none focus:border-pink-200" />
-          </div>
-          <div className="mt-3 overflow-y-auto pr-1">
-            <div className="grid grid-cols-1 gap-2">
-              {filtered.map((region) => (
-                <button key={region.label} className="w-full rounded-2xl border-2 border-pink-100 bg-pink-50/40 px-3 py-2 text-left transition-colors hover:bg-pink-50">
-                  <div className="text-sm font-medium text-foreground">{region.label}</div>
-                </button>
-              ))}
-            </div>
-          </div>
+    <aside className="rounded-[2rem] border border-pink-100 bg-white/80 p-5 shadow-sm">
+      <div className="flex items-center justify-between gap-2">
+        <div>
+          <p className="text-sm font-semibold text-pink-700">Region</p>
+          <h2 className="font-bold text-foreground">縣市 / 區域</h2>
+        </div>
+        <div className="text-xs text-muted-foreground">12 縣市</div>
+      </div>
+      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+        先以縣市區域建立查詢入口，後續可接上各地方政府正式補助資料。
+      </p>
+      <div className="mt-4">
+        <input value={q} onChange={(event) => setQ(event.target.value)} placeholder="搜尋：台中市-北區" className="w-full rounded-xl border-2 border-pink-100 bg-white px-3 py-2 text-sm outline-none focus:border-pink-200" />
+      </div>
+      <div className="mt-4 max-h-80 overflow-y-auto pr-1">
+        <div className="grid grid-cols-1 gap-2">
+          {filtered.slice(0, 18).map((region) => (
+            <button key={region.label} className="w-full rounded-2xl border-2 border-pink-100 bg-pink-50/40 px-3 py-2 text-left transition-colors hover:bg-pink-50">
+              <div className="text-sm font-medium text-foreground">{region.label}</div>
+            </button>
+          ))}
         </div>
       </div>
+      {filtered.length > 18 ? (
+        <p className="mt-3 text-xs text-muted-foreground">還有 {filtered.length - 18} 個區域，請輸入關鍵字縮小範圍。</p>
+      ) : null}
     </aside>
   )
 }

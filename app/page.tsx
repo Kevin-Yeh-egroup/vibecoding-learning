@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Sparkles, Brain, MessageSquare, Zap, Briefcase, Rocket, Users } from 'lucide-react'
+import { ArrowRight, Sparkles, Brain, MessageSquare, Zap, Briefcase, Rocket, Users, Star, Trophy } from 'lucide-react'
 import Link from 'next/link'
 
 type PortfolioPreview = {
@@ -17,6 +17,16 @@ type StudentPortfolio = {
   name: string
   href?: string
   preview?: PortfolioPreview
+}
+
+type AwardWinner = {
+  rank: 1 | 2 | 3
+  name: string
+  title: string
+  href: string
+  summary: string
+  reasons: string[]
+  palette: 'gold' | 'silver' | 'bronze'
 }
 
 const studentPortfolios = [
@@ -203,6 +213,55 @@ const studentPortfolios = [
     ],
   },
 ] satisfies { group: string; students: StudentPortfolio[] }[]
+
+const awardWinners = [
+  {
+    rank: 1,
+    name: '黃駿宇',
+    title: 'SWIST-AI-TW｜社會工作 AI 會談訓練系統',
+    href: '/portfolio/huang-jun-yu',
+    summary: '最能把社工教育現場的痛點轉成可討論、可練習、可回饋的產品原型。',
+    reasons: [
+      '清楚指出真實個案不可重來、督導資源有限、新手承擔高壓決策等訓練困境。',
+      '把困境具體轉換成情境模擬、即時互動、專業回饋與重複練習四個功能。',
+      '目標使用者涵蓋學生、現職社工、教師督導與機構，具備實務推廣想像。',
+    ],
+    palette: 'gold',
+  },
+  {
+    rank: 2,
+    name: '張雅筑',
+    title: 'Judy Chang｜青少年自立與財務賦能',
+    href: '/portfolio/submitted/chang-ya-chu',
+    summary: '專業定位鮮明，能把實務經驗、服務對象與合作形式整合成完整服務頁。',
+    reasons: [
+      '服務對象具體鎖定安置與轉銜青年、特殊教育需求者及第一線合作夥伴。',
+      '將財務賦能、自立生活、特殊教育與 AI 輔具合作串成清楚的專業品牌。',
+      '專案經驗與聯絡行動明確，適合實際用於機構合作、課程洽談與資源連結。',
+    ],
+    palette: 'silver',
+  },
+  {
+    rank: 3,
+    name: '陳資旻',
+    title: '台中市福利小幫手｜育兒補助與家庭資源整理',
+    href: '/portfolio/submitted/chen-tzu-min',
+    summary: '把家長找補助的資訊焦慮，轉成好入口、好瀏覽、好理解的福利導覽。',
+    reasons: [
+      '從家長需求出發，整理生育津貼、托育補助、育兒津貼與早療服務等常見資源。',
+      '入口分類與熱門補助卡片降低搜尋門檻，符合社工協助家庭理解資源的工作邏輯。',
+      '加入縣市區域搜尋概念，展現後續擴充成地方福利查詢工具的潛力。',
+    ],
+    palette: 'bronze',
+  },
+] satisfies AwardWinner[]
+
+const portfolioSuggestions = [
+  '先寫清楚服務對象是誰，例如家長、學生、第一線社工、特定社區居民或機構夥伴。',
+  '把對方最常遇到的困擾具體化，不只說「需要幫忙」，而是描述卡在哪個流程、資訊或情緒壓力。',
+  '每個作品至少設計三個可被看見的功能，讓使用者知道進入頁面後能做什麼。',
+  '補上一句使用後的改變，例如更快找到資源、更容易回報進度、或更能理解自己的下一步。',
+]
 
 function GenericPortfolioPreview() {
   return (
@@ -574,6 +633,151 @@ export default function CoursePage() {
             <p className="max-w-2xl mx-auto text-foreground/70 leading-relaxed">
               以同學姓名為標題整理課堂作品，卡片中呈現每位同學製作首頁的預覽版型。
             </p>
+          </div>
+
+          <div className="mb-16 overflow-hidden rounded-3xl border border-primary/20 bg-card/40">
+            <div className="grid gap-10 p-6 sm:p-8 lg:grid-cols-[0.95fr_1.05fr] lg:p-10">
+              <div className="flex flex-col justify-between gap-8">
+                <div>
+                  <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+                    <Trophy className="h-4 w-4" />
+                    本次前三名正式公布
+                  </div>
+                  <h3 className="mb-4 text-2xl font-bold text-foreground sm:text-3xl">
+                    Vibe Coding 需求具體化獎
+                  </h3>
+                  <p className="max-w-xl leading-relaxed text-foreground/70">
+                    我們以「能否把真實需求說清楚，並轉成可使用、可討論、可延伸的作品」作為主要標準，選出最具代表性的三件作品。
+                  </p>
+                </div>
+
+                <div className="award-podium-stage relative mx-auto flex min-h-[350px] w-full max-w-xl items-end justify-center gap-3 overflow-hidden rounded-3xl border border-border/50 bg-gradient-to-b from-background/80 via-card/70 to-primary/10 px-5 pb-7 pt-20">
+                  <div className="absolute left-8 top-8 h-16 w-16 rounded-full bg-primary/10 blur-2xl" />
+                  <div className="absolute right-10 top-16 h-20 w-20 rounded-full bg-accent/10 blur-2xl" />
+                  <div className="confetti-float absolute left-10 top-14 h-3 w-8 rotate-12 rounded-full bg-primary/60" />
+                  <div className="confetti-float absolute right-16 top-10 h-3 w-7 -rotate-12 rounded-full bg-accent/60 [animation-delay:0.5s]" />
+                  <div className="confetti-float absolute left-[45%] top-8 h-2 w-10 rotate-6 rounded-full bg-muted/60 [animation-delay:1s]" />
+                  <div className="award-bounce absolute top-11 grid h-16 w-16 place-items-center rounded-full border border-amber-300/50 bg-amber-400/15 text-amber-300">
+                    <Trophy className="h-8 w-8" />
+                  </div>
+                  <div className="absolute bottom-5 left-8 right-8 h-6 rounded-full bg-primary/10 blur-xl" />
+                  {[
+                    {
+                      winner: awardWinners[1],
+                      height: 'h-36 sm:h-40',
+                      orderLabel: '2',
+                      medalClassName: 'border-slate-200/70 bg-slate-200/15 text-slate-200',
+                      podiumClassName: 'from-slate-200/80 via-slate-400/50 to-slate-700/50',
+                      delay: '0.15s',
+                    },
+                    {
+                      winner: awardWinners[0],
+                      height: 'h-52 sm:h-60',
+                      orderLabel: '1',
+                      medalClassName: 'border-amber-200/80 bg-amber-300/20 text-amber-200',
+                      podiumClassName: 'from-amber-200/95 via-amber-400/60 to-amber-700/55',
+                      delay: '0s',
+                    },
+                    {
+                      winner: awardWinners[2],
+                      height: 'h-28 sm:h-32',
+                      orderLabel: '3',
+                      medalClassName: 'border-orange-200/80 bg-orange-300/20 text-orange-200',
+                      podiumClassName: 'from-orange-200/85 via-orange-500/50 to-orange-800/50',
+                      delay: '0.3s',
+                    },
+                  ].map((podium) => (
+                    <Link
+                      key={podium.winner.rank}
+                      href={podium.winner.href}
+                      className="podium-rise group relative z-10 flex flex-1 flex-col items-center"
+                      style={{ animationDelay: podium.delay }}
+                    >
+                      {podium.winner.rank === 1 ? (
+                        <div className="absolute -top-10 flex items-end gap-1 text-amber-200">
+                          <Star className="h-4 w-4 rotate-[-18deg] fill-current" />
+                          <Trophy className="h-7 w-7" />
+                          <Star className="h-4 w-4 rotate-[18deg] fill-current" />
+                        </div>
+                      ) : null}
+                      <div className={`medal-shine mb-3 grid h-16 w-16 place-items-center rounded-full border text-xl font-black shadow-lg transition-transform group-hover:-translate-y-1 ${podium.medalClassName}`}>
+                        {podium.orderLabel}
+                      </div>
+                      <div className={`${podium.height} flex w-full max-w-[142px] flex-col items-center justify-end rounded-t-[2rem] border border-white/25 bg-gradient-to-b ${podium.podiumClassName} p-4 text-center transition-transform group-hover:-translate-y-2`}>
+                        <p className="text-xs font-semibold text-background/80">第 {podium.winner.rank} 名</p>
+                        <p className="mt-1 text-lg font-black text-background">{podium.winner.name}</p>
+                        <p className="mt-2 line-clamp-2 rounded-xl bg-background/20 px-2 py-1 text-xs font-medium leading-relaxed text-background/85">
+                          {podium.winner.title.split('｜')[0]}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-5">
+                {awardWinners.map((winner) => {
+                  const toneClassName = {
+                    gold: 'border-amber-300/40 bg-amber-500/10 text-amber-600',
+                    silver: 'border-slate-300/40 bg-slate-500/10 text-slate-500',
+                    bronze: 'border-orange-300/40 bg-orange-500/10 text-orange-600',
+                  }[winner.palette]
+
+                  return (
+                    <article key={winner.rank} className="winner-card-enter rounded-2xl border border-border/60 bg-background/65 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/35 hover:bg-background/80">
+                      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                        <div>
+                          <div className={`mb-3 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-bold ${toneClassName}`}>
+                            <Star className="h-3.5 w-3.5 fill-current" />
+                            第 {winner.rank} 名
+                          </div>
+                          <h4 className="text-xl font-bold text-foreground">{winner.name}</h4>
+                          <p className="mt-1 text-sm font-medium text-primary">{winner.title}</p>
+                        </div>
+                        <Link href={winner.href} className="text-sm font-medium text-accent hover:text-accent/80">
+                          查看作品
+                        </Link>
+                      </div>
+                      <p className="mb-3 text-sm font-semibold text-foreground/85">入選具體理由</p>
+                      <ul className="space-y-2">
+                        {winner.reasons.map((reason, index) => (
+                          <li key={reason} className="flex gap-3 text-sm leading-relaxed text-foreground/70">
+                            <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full border border-primary/25 bg-primary/10 text-xs font-bold text-primary">
+                              {index + 1}
+                            </span>
+                            <span>{reason}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </article>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-16 rounded-3xl border border-accent/20 bg-gradient-to-br from-accent/10 via-card/40 to-primary/10 p-6 sm:p-8">
+            <div className="mb-6 max-w-3xl">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-2 text-sm font-medium text-accent">
+                <Sparkles className="h-4 w-4" />
+                給後續作品的優化建議
+              </div>
+              <h3 className="text-2xl font-bold text-foreground">讓作品更像可溝通的需求原型</h3>
+              <p className="mt-3 leading-relaxed text-foreground/70">
+                其他作品可以不用急著追求更多裝飾，先把「誰需要、遇到什麼困難、頁面如何幫忙」說得更具體，vibecoding 的成果就會更容易被理解與延伸。
+              </p>
+            </div>
+
+            <div className="grid gap-3 md:grid-cols-2">
+              {portfolioSuggestions.map((suggestion, index) => (
+                <div key={suggestion} className="flex gap-3 rounded-2xl border border-border/50 bg-background/55 p-4">
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-accent/15 text-sm font-bold text-accent">
+                    {index + 1}
+                  </span>
+                  <p className="text-sm leading-relaxed text-foreground/75">{suggestion}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="space-y-12">

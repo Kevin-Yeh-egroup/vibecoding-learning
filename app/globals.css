@@ -144,10 +144,84 @@
   }
 }
 
+@keyframes podium-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes confetti-float {
+  0%, 100% {
+    transform: translateY(0) rotate(8deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(-8deg);
+  }
+}
+
+@keyframes award-bounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.04);
+  }
+}
+
+@keyframes medal-shine {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.18);
+  }
+}
+
 .glow-card {
   animation: glow 3s ease-in-out infinite;
 }
 
 .float {
   animation: float 3s ease-in-out infinite;
+}
+
+.award-podium-stage {
+  isolation: isolate;
+}
+
+.podium-rise {
+  animation: podium-rise 700ms ease-out both;
+}
+
+.confetti-float {
+  animation: confetti-float 3.8s ease-in-out infinite;
+}
+
+.award-bounce {
+  animation: award-bounce 2.8s ease-in-out infinite;
+}
+
+.medal-shine {
+  animation: medal-shine 2.6s ease-in-out infinite;
+}
+
+.winner-card-enter {
+  animation: podium-rise 650ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .podium-rise,
+  .confetti-float,
+  .award-bounce,
+  .medal-shine,
+  .winner-card-enter,
+  .float,
+  .glow-card {
+    animation: none;
+  }
 }
