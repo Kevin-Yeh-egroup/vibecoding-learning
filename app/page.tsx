@@ -68,12 +68,78 @@ const studentPortfolios = [
   {
     group: '工讀生',
     students: [
-      { name: '于沁' },
-      { name: '雅筑' },
-      { name: '資旻' },
-      { name: '妤臻' },
-      { name: '弈妏' },
-      { name: '宥辰' },
+      {
+        name: '曾于沁',
+        href: '/portfolio/submitted/tseng-yu-chin',
+        preview: {
+          nickname: '看見與陪伴',
+          role: '男性育嬰假議題倡議',
+          quote: '願每一位想陪孩子長大的人，都不必先為自己的照顧角色辯解。',
+          sections: ['微歧視', '數據故事', '真實聲音', '支持資源'],
+          initial: '曾',
+          palette: 'green',
+        },
+      },
+      {
+        name: '張雅筑',
+        href: '/portfolio/submitted/chang-ya-chu',
+        preview: {
+          nickname: 'Judy Chang',
+          role: '執業社工師 / 青少年自立生活顧問',
+          quote: '賦能青少年從自立到自強，也與特殊教育、身心障礙服務同行。',
+          sections: ['自立生活', '財務諮詢', '特殊教育', '輔具創新'],
+          initial: '張',
+          palette: 'amber',
+        },
+      },
+      {
+        name: '陳資旻',
+        href: '/portfolio/submitted/chen-tzu-min',
+        preview: {
+          nickname: '台中市福利小幫手',
+          role: '育兒補助與家庭資源整理',
+          quote: '不用找資料，這裡幫你整理好。',
+          sections: ['生育津貼', '托育補助', '育兒津貼', '早療服務'],
+          initial: '陳',
+          palette: 'pink',
+        },
+      },
+      {
+        name: '施妤臻',
+        href: 'https://v0-self-intro-page-ten.vercel.app/',
+        preview: {
+          nickname: 'Yuyu',
+          role: '社工師 / 身心障礙支持服務工作者',
+          quote: '好的支持，是陪伴每個人用自己的步調成長。',
+          sections: ['ISP 規劃', '活動設計', '個案支持', '社區融合'],
+          initial: '施',
+          palette: 'blue',
+        },
+      },
+      {
+        name: '林弈妏',
+        href: 'https://v0-personal-introduction-page-drab.vercel.app/',
+        preview: {
+          nickname: 'Yi-Wen Lin',
+          role: '行政助理 / 內容編輯 / 細節愛好者',
+          quote: '好的設計不只是視覺上的美感，更是一種讓人感到舒適與平衡的存在。',
+          sections: ['行政協調', '流程管理', '內容編輯', '生活美學'],
+          initial: '林',
+          palette: 'stone',
+        },
+      },
+      {
+        name: '葉宥辰',
+        href: 'https://v0-personal-editorial-website.vercel.app/',
+        preview: {
+          nickname: 'Ethan',
+          role: '展店開發業務 / 投資研究',
+          quote: '成長不是突然變得厲害，而是慢慢建立更穩定的自己。',
+          sections: ['投資研究', '工作成長', '自我累積', '日常節奏'],
+          initial: '葉',
+          palette: 'teal',
+        },
+      },
       {
         name: '吳婷宇',
         href: '/portfolio/wu-ting-yu',
@@ -98,7 +164,18 @@ const studentPortfolios = [
           palette: 'stone',
         },
       },
-      { name: '庭瑋' },
+      {
+        name: '劉庭瑋',
+        href: '/portfolio/submitted/liu-ting-wei',
+        preview: {
+          nickname: 'HOOK',
+          role: '歷史系 YouTuber 介紹頁',
+          quote: '把歷史、生活與實驗變成讓人停不下來的故事。',
+          sections: ['歷史科普', '料理挑戰', '旅行探索', '生活紀錄'],
+          initial: '劉',
+          palette: 'stone',
+        },
+      },
       {
         name: '黃駿宇',
         href: '/portfolio/huang-jun-yu',
@@ -123,7 +200,6 @@ const studentPortfolios = [
           palette: 'blue',
         },
       },
-      { name: '忻妤' },
     ],
   },
 ] satisfies { group: string; students: StudentPortfolio[] }[]
@@ -513,6 +589,7 @@ export default function CoursePage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                   {section.students.map((student, index) => {
+                    const isExternalLink = student.href?.startsWith('http') || student.href?.startsWith('file:')
                     const card = (
                       <>
                         <div className="relative aspect-[4/3] overflow-hidden border-b border-border/40 bg-gradient-to-br from-primary/10 via-accent/10 to-card">
@@ -543,9 +620,21 @@ export default function CoursePage() {
                       : 'group overflow-hidden rounded-xl border border-primary/20 bg-card/40 opacity-80'
 
                     return student.href ? (
-                      <Link key={student.name} href={student.href} className={`${cardClassName} block`}>
-                        {card}
-                      </Link>
+                      isExternalLink ? (
+                        <a
+                          key={student.name}
+                          href={student.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={`${cardClassName} block`}
+                        >
+                          {card}
+                        </a>
+                      ) : (
+                        <Link key={student.name} href={student.href} className={`${cardClassName} block`}>
+                          {card}
+                        </Link>
+                      )
                     ) : (
                       <article key={student.name} className={cardClassName}>
                         {card}
