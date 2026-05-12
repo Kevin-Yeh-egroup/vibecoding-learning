@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import { ArrowLeft, CheckCircle, Mail, MessageCircle, Quote, Rainbow, Send, Sparkles, Target } from 'lucide-react'
+import { CheckCircle, Mail, MessageCircle, Quote, Rainbow, Send, Sparkles, Target } from 'lucide-react'
+import { PortfolioBackLink } from '../portfolio-back-link'
 
 const strengths = [
   {
@@ -48,10 +48,7 @@ export default function WuTingYuPortfolioPage() {
     <main className="min-h-screen bg-[#fff8fb] text-[#3e2c34]">
       <header className="sticky top-0 z-40 border-b border-pink-100 bg-[#fff8fb]/85 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <Link href="/#portfolio" className="inline-flex items-center gap-2 text-sm font-medium text-pink-600 hover:text-pink-700">
-            <ArrowLeft className="size-4" />
-            返回學員作品集
-          </Link>
+          <PortfolioBackLink className="border-pink-100 bg-white/75 text-pink-600 hover:text-pink-700" />
           <div className="hidden items-center gap-6 text-sm text-[#7b6470] md:flex">
             <a href="#about" className="hover:text-pink-600">About</a>
             <a href="#strengths" className="hover:text-pink-600">Strengths</a>

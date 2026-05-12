@@ -1,5 +1,4 @@
-import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
+import { PortfolioBackLink } from '../portfolio-back-link'
 
 const activities = [
   ['研究', 'Research', '量化研究方法，探索日常經驗如何影響人的想法與行為。對數據背後的故事感興趣。'],
@@ -31,10 +30,7 @@ export default function ChenXiPortfolioPage() {
     <main className="min-h-screen bg-[#fbfaf8] text-stone-950">
       <nav className="fixed left-0 right-0 top-0 z-50 border-b border-stone-200/50 bg-[#fbfaf8]/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <Link href="/#portfolio" className="inline-flex items-center gap-2 text-sm font-medium text-stone-600 transition-colors hover:text-stone-950">
-            <ArrowLeft className="size-4" />
-            返回學員作品集
-          </Link>
+          <PortfolioBackLink className="border-stone-200 bg-white/75 text-stone-600 hover:text-stone-950" />
           <span className="text-sm font-medium tracking-wide">Tracy Chen</span>
         </div>
       </nav>

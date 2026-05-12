@@ -116,7 +116,7 @@ const studentPortfolios = [
       },
       {
         name: '施妤臻',
-        href: 'https://v0-self-intro-page-ten.vercel.app/',
+        href: '/portfolio/shih-yu-chen',
         preview: {
           nickname: 'Yuyu',
           role: '社工師 / 身心障礙支持服務工作者',
@@ -780,7 +780,7 @@ export default function CoursePage() {
             </div>
           </div>
 
-          <div className="space-y-12">
+          <div id="student-portfolios" className="scroll-mt-24 space-y-12">
             {studentPortfolios.map((section) => (
               <div key={section.group} className="space-y-5">
                 <div className="flex items-center gap-3">

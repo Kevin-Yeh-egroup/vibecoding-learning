@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import { ArrowLeft, BarChart3, Brain, Briefcase, Building2, GraduationCap, MessageSquare, Repeat, Users } from 'lucide-react'
+import { BarChart3, Brain, Briefcase, Building2, GraduationCap, MessageSquare, Repeat, Users } from 'lucide-react'
+import { PortfolioBackLink } from '../portfolio-back-link'
 
 const features = [
   ['情境模擬', '模擬低收入戶、家庭暴力、兒少保護、心理困擾等多元案例情境', Brain],
@@ -22,10 +22,7 @@ export default function HuangJunYuPortfolioPage() {
     <main className="min-h-screen bg-[#f5fbfb] text-slate-900">
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-[#f5fbfb]/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-          <Link href="/#portfolio" className="inline-flex items-center gap-2 text-sm font-medium text-teal-700 hover:text-teal-800">
-            <ArrowLeft className="size-4" />
-            返回學員作品集
-          </Link>
+          <PortfolioBackLink className="border-teal-100 bg-white/75 text-teal-700 hover:text-teal-800" />
           <div className="flex items-center gap-3">
             <div className="h-8 w-2 bg-teal-700" />
             <h1 className="text-lg font-light tracking-wider">SWIST-AI-TW</h1>

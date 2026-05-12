@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import { ArrowLeft, BookOpen, Calculator, Check, Eye, FileText, Link2, ListChecks, Shield, Users } from 'lucide-react'
+import { BookOpen, Calculator, Check, Eye, FileText, Link2, ListChecks, Shield, Users } from 'lucide-react'
+import { PortfolioBackLink } from '../portfolio-back-link'
 
 const benefits = [
   ['看懂自己的財務現況', '釐清收入、支出、債務與生活壓力來源。', Eye],
@@ -27,10 +27,7 @@ export default function ChenSiXuanPortfolioPage() {
     <main className="min-h-screen bg-[#f7fcf8] text-emerald-950">
       <header className="sticky top-0 z-40 border-b border-emerald-100 bg-[#f7fcf8]/90 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link href="/#portfolio" className="inline-flex items-center gap-2 text-sm font-medium text-emerald-700 hover:text-emerald-800">
-            <ArrowLeft className="size-4" />
-            返回學員作品集
-          </Link>
+          <PortfolioBackLink className="border-emerald-100 bg-white/75 text-emerald-700 hover:text-emerald-800" />
           <span className="text-sm font-medium text-emerald-700">財務規劃課程</span>
         </nav>
       </header>

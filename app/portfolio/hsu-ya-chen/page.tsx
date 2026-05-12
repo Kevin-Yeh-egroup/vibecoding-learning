@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import { ArrowLeft, Briefcase, FileText, Mail, TableProperties } from 'lucide-react'
+import { Briefcase, FileText, Mail, TableProperties } from 'lucide-react'
+import { PortfolioBackLink } from '../portfolio-back-link'
 
 const experiences = [
   {
@@ -26,10 +26,7 @@ export default function HsuYaChenPortfolioPage() {
     <main className="min-h-screen bg-[#f8fbff] text-slate-800">
       <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-[#f8fbff]/85 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link href="/#portfolio" className="inline-flex items-center gap-2 text-sm font-medium text-sky-700 hover:text-sky-800">
-            <ArrowLeft className="size-4" />
-            返回學員作品集
-          </Link>
+          <PortfolioBackLink className="border-sky-100 bg-white/75 text-sky-700 hover:text-sky-800" />
           <div className="hidden gap-8 text-sm tracking-wide text-slate-500 md:flex">
             <a href="#about" className="hover:text-sky-700">關於我</a>
             <a href="#experience" className="hover:text-sky-700">工作經驗</a>

@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import { ArrowLeft, CalendarDays, CheckCircle2, ClipboardList, Clock, ExternalLink, ListTodo, Timer } from 'lucide-react'
+import { CalendarDays, CheckCircle2, ClipboardList, Clock, ExternalLink, ListTodo, Timer } from 'lucide-react'
+import { PortfolioBackLink } from '../portfolio-back-link'
 
 const tools = [
   {
@@ -23,10 +23,7 @@ export default function HungYuJunPortfolioPage() {
     <main className="min-h-screen bg-[#f5fbfb] text-slate-900">
       <header className="sticky top-0 z-40 border-b border-teal-100 bg-[#f5fbfb]/90 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link href="/#portfolio" className="inline-flex items-center gap-2 text-sm font-medium text-teal-700 hover:text-teal-800">
-            <ArrowLeft className="size-4" />
-            返回學員作品集
-          </Link>
+          <PortfolioBackLink className="border-teal-100 bg-white/75 text-teal-700 hover:text-teal-800" />
           <span className="text-sm font-semibold tracking-wide text-teal-700">洪瑜君｜v0 工具作品</span>
         </nav>
       </header>

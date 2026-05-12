@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import { AlertTriangle, ArrowLeft, Award, Compass, Eye, Footprints, PiggyBank, Play, Receipt, ShieldCheck, Target, Users } from 'lucide-react'
+import { AlertTriangle, Award, Compass, Eye, Footprints, PiggyBank, Play, Receipt, ShieldCheck, Target, Users } from 'lucide-react'
+import { PortfolioBackLink } from '../portfolio-back-link'
 
 const situations = [
   ['想存錢，但總是存不起來', '每個月都很緊，但也不知道問題在哪', '剛開始工作、收入不穩', PiggyBank],
@@ -29,10 +29,7 @@ export default function LiuYiYinPortfolioPage() {
     <main className="min-h-screen bg-[#fffbf2] text-stone-900">
       <header className="sticky top-0 z-40 border-b border-amber-100 bg-[#fffbf2]/90 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link href="/#portfolio" className="inline-flex items-center gap-2 text-sm font-medium text-amber-700 hover:text-amber-800">
-            <ArrowLeft className="size-4" />
-            返回學員作品集
-          </Link>
+          <PortfolioBackLink className="border-amber-100 bg-white/75 text-amber-700 hover:text-amber-800" />
           <span className="text-sm font-semibold tracking-wide text-amber-700">馴錢師</span>
         </nav>
       </header>
