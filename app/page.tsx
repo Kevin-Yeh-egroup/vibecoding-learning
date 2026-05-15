@@ -33,7 +33,18 @@ const studentPortfolios = [
   {
     group: '辦公室人員',
     students: [
-      { name: '怡君' },
+      {
+        name: '謝怡君',
+        href: '/portfolio/hsieh-yi-chun',
+        preview: {
+          nickname: '親子共讀互動工具',
+          role: '親子共讀引導 / 家庭金錢對話',
+          quote: '不只是念故事，也能從日常消費開始練習親子對話。',
+          sections: ['共讀引導', '互動遊戲', '消費紀錄', '家長對話'],
+          initial: '謝',
+          palette: 'pink',
+        },
+      },
       {
         name: '洪瑜君',
         href: '/portfolio/hung-yu-jun',
@@ -47,7 +58,18 @@ const studentPortfolios = [
         },
       },
       { name: '思宜' },
-      { name: '雅婷' },
+      {
+        name: '楊雅婷',
+        href: '/portfolio/yang-ya-ting',
+        preview: {
+          nickname: '好理家在',
+          role: 'AI 財務課程 / 財務知識快問快答',
+          quote: '讓 AI 成為你的財務助手，也用遊戲化問答建立財務觀念。',
+          sections: ['財務健檢', 'AI 工具', '課程模組', '快問快答'],
+          initial: '楊',
+          palette: 'amber',
+        },
+      },
       {
         name: '劉奕吟',
         href: '/portfolio/liu-yi-yin',
